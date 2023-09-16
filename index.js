@@ -34,7 +34,7 @@ const promptQuestions = [
     type: "list",
     name: "shape",
     message: "choose a shape:",
-    choices: [new Square(), new Triangle(), new Circle()],
+    choices: ["Square ", "Triangle", "Circle"],
   },
 ];
 
@@ -59,9 +59,7 @@ async function init() {
   if (answers.text.lenght > 0 && answers.text.length < 4) {
     userText = answers.text;
   } else {
-    console.error(
-      `The length of your input must be between ${MINIMUM_TEXT_LENGTH} and ${MAXIMUM_TEXT_LENGTH}`
-    );
+    console.error("The length of your input must be between 1-3 characters");
     return;
   }
   console.log("user text: [" + userText + "]");
