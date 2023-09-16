@@ -1,6 +1,5 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-
 const { Square, Triangle, Circle } = require("./lib/shapes.js");
 
 class SvgShapes {
@@ -14,8 +13,8 @@ class SvgShapes {
   setTextElement(text, color) {
     this.textElement = `<text x="150" y="125" font -size="60" fill="${color}">${text}</text>`;
   }
-  setShapeElement(typeOfShape) {
-    this.shapeElement = typeOfShape.render();
+  setShapeElement(Shape) {
+    this.shapeElement = Shape.render();
   }
 }
 
@@ -23,23 +22,28 @@ const promptQuestions = [
   {
     type: "input",
     name: "text",
-    message: "What is the text you want to display?",
+    message: "TEXT: Enter up to (3) Characters:",
   },
   {
     type: "input",
-    name: "color",
-    message: "what color do u like?",
+    name: "text-color",
+    message: "TEXT COLOR: what text color do u like?",
   },
   {
+    type:"input",
+    name:'shape',
+    message:"SHAPE COLOR : what shape color would you like? "
+  }
+  {
     type: "list",
-    name: "shape",
-    message: "choose a shape:",
+    name: "pixel-image",
+    message: "choose which Pixel Image would you like?",
     choices: ["Square ", "Triangle", "Circle"],
   },
 ];
 
 function writeToFile(filename, data) {
-  console.log("answers:", JSON.stringify(data));
+  console.log("Writing [" + data + "] to file [" + fileName + "]")
   fileSystem.writeToFile(filename, data, function (err) {
     if (err) {
       return console.log(err);
