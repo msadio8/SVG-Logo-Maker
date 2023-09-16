@@ -1,6 +1,6 @@
+const filesystem = require('./node_modules/graceful-fs/graceful-fs')
 const inquirer = require("inquirer");
-const fs = require("fs");
-const { Square, Triangle, Circle } = require("./lib/shapes.js");
+const { Square, Triangle, Circle } = require("./lib/shapes");
 
 class SvgShapes {
   constructor() {
@@ -33,7 +33,7 @@ const promptQuestions = [
     type:"input",
     name:'shape',
     message:"SHAPE COLOR : what shape color would you like? "
-  }
+  },
   {
     type: "list",
     name: "pixel-image",
@@ -43,8 +43,8 @@ const promptQuestions = [
 ];
 
 function writeToFile(filename, data) {
-  console.log("Writing [" + data + "] to file [" + fileName + "]")
-  fileSystem.writeToFile(filename, data, function (err) {
+  console.log("Writing [" + data + "] to file [" + filename + "]")
+  filesystem.writeToFile(filename, data, function (err) {
     if (err) {
       return console.log(err);
     }
@@ -63,30 +63,30 @@ async function init() {
   if (answers.text.lenght > 0 && answers.text.length < 4) {
     userText = answers.text;
   } else {
-    console.error("The length of your input must be between 1-3 characters");
+    console.log("The length of your input must be between 1-3 characters");
     return;
   }
-  console.log("user text: [" + userText + "]");
+  console.log("User text: [" + userText + "]");
 
   userFontColor = answers["text-color"];
-  console.log("user font color:[" + userFontColor + "]");
+  console.log("User font color:[" + userFontColor + "]");
 
   userShapeColor = answers.shape;
-  console.log("user shape color:[" + userShapeColor + "]");
+  console.log("User shape color:[" + userShapeColor + "]");
 
   userShapeType = answers["pixel-image"];
-  console.log("user pixel image:[" + userShapeType + "]");
+  console.log("User entered shape = [" + userShapeType + "]");
 
   let userShape;
   if (userShapeType === "Square =" || userShapeType === "square") {
     userShape = new Square();
-    console.log("creating square...");
+    console.log("User selected Square shape");
   } else if (userShapeType === "Circle" || userShapeType === "circle") {
     userShape = new Circle();
-    console.log("creating circle...");
+    console.log("User selected Circle shape");
   } else if (userShapeType === "Triangle" || userShapeType === "triangle") {
     userShape = new Triangle();
-    console.log("creating triangle...");
+    console.log("User selected Triangle shape");
   } else {
     console.log("Invalid shape ");
   }
@@ -101,6 +101,6 @@ async function init() {
 
   console.log("new shape is gerated");
   console.log("writing new svg shape to file...");
-  writeToFile(svgFile);
+  writeToFile(svgFile, svgString);
 }
 init();
